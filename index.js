@@ -25,9 +25,23 @@ async function run() {
     // await client.connect();
     // Users code start from here:
 
-	const database = client.db('studypeerDB')
+    const database = client.db('studypeerDB')
     const assignments = database.collection('assignments')
-    
+
+    /* START CRUD OPERATIONS FOR ASSIGNMENTS */
+    //Assignments >> create
+    app.post('/assignments', async(req, res)=>{
+      const createAssign = req.body
+
+      const result = await assignments.insertOne(createAssign)
+      res.send(result)
+    })
+
+    //Assignments >> read
+    app.get('/assignments', async(req, res)=>{
+      const result = await assignments.find().toArray()
+      res.send(result)
+    })
 
 
 
@@ -42,10 +56,10 @@ async function run() {
 run().catch(console.dir);
 
 
-app.get('/', (req, res)=>{
-    res.send('Welcome to express-server')
+app.get('/', (req, res) => {
+  res.send('Welcome to server')
 })
 
-app.listen(port, ()=>{
-    console.log(`express-server is running on ${port}`)
+app.listen(port, () => {
+  console.log(`Server is running on ${port}`)
 })
