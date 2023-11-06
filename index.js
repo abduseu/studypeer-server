@@ -8,7 +8,7 @@ app.use(cors())
 app.use(express.json())
 
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = `mongodb+srv://${process.env.db_user}:${process.env.db_pass}@cluster0.rkpusfk.mongodb.net/?retryWrites=true&w=majority`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -40,6 +40,15 @@ async function run() {
     //Assignments >> read
     app.get('/assignments', async(req, res)=>{
       const result = await assignments.find().toArray()
+      res.send(result)
+    })
+
+    //Assignments >> delete
+    app.delete('/assignments/:id', async(req, res)=>{
+      const id = req.params.id
+
+      const filter = { _id: new ObjectId(id) }
+      const result = await assignments.deleteOne(filter)
       res.send(result)
     })
 
