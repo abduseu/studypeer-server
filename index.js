@@ -60,6 +60,27 @@ async function run() {
       res.send(result)
     })
 
+    //Assignments >> Update
+    app.put('/assignments/:id', async(req, res)=>{
+      const id = req.params.id
+      const updateAssign = req.body
+
+      const filter = { _id: new ObjectId(id) }
+      const updateDoc = {
+        $set: {
+          title: updateAssign.title,
+          description: updateAssign.description,
+          difficulty: updateAssign.difficulty,
+          marks: updateAssign.marks,
+          image: updateAssign.image,
+          dueDate: updateAssign.dueDate
+        }
+      }
+      
+      const result = await assignments.updateOne(filter, updateDoc)
+      res.send(result)
+    })
+
 
 
     // Send a ping to confirm a successful connection
