@@ -42,6 +42,14 @@ async function run() {
       const result = await assignments.find().toArray()
       res.send(result)
     })
+    //Assignments >> read one
+    app.get('/assignments/:id', async(req, res)=>{
+      const id = req.params.id
+
+      const filter = { _id: new ObjectId(id) }
+      const result = await assignments.findOne(filter)
+      res.send(result)
+    })
 
     //Assignments >> delete
     app.delete('/assignments/:id', async(req, res)=>{
