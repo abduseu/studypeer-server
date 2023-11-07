@@ -50,6 +50,14 @@ async function run() {
       const result = await assignments.findOne(filter)
       res.send(result)
     })
+    //Assignments >> read by difficulty
+    app.get('/difficulty/:id', async(req, res)=>{
+      const id = req.params.id
+
+      const filter = { difficulty: id }
+      const result = await assignments.find(filter).toArray()
+      res.send(result)
+    })
 
     //Assignments >> delete
     app.delete('/assignments/:id', async(req, res)=>{
