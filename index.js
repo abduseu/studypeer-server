@@ -105,13 +105,32 @@ async function run() {
       const result = await submittedAssignments.find(filter).toArray()
       res.send(result)
     })
-    
+
     //Submitted Assignments >> read one
     app.get('/submitted/:id', async(req, res)=>{
       const id = req.params.id
 
       const filter = { _id: new ObjectId(id) }
       const result = await submittedAssignments.findOne(filter)
+      res.send(result)
+    })
+
+    //Submitted Assignments >> Update
+    app.put('/submitted/:id', async(req, res)=>{
+      const id = req.params.id
+      const giveMark = req.body
+
+      const filter = { _id: new ObjectId(id) }
+      const options = { upsert: true }
+      const updateDoc = {
+        $set: {
+          status: giveMark.status,
+          score: giveMark.score,
+          feedback: giveMark.feedback
+        }
+      }
+      
+      const result = await submittedAssignments.updateOne(filter, updateDoc, options)
       res.send(result)
     })
     
