@@ -27,6 +27,7 @@ async function run() {
 
     const database = client.db('studypeerDB')
     const assignments = database.collection('assignments')
+    const submittedAssignments = database.collection('submitted_assignments')
 
     /* START CRUD OPERATIONS FOR ASSIGNMENTS */
     //Assignments >> create
@@ -89,6 +90,14 @@ async function run() {
       res.send(result)
     })
 
+    /* START CRUD OPERATIONS FOR SUBMITTED ASSIGNMENTS */
+    //Submitted Assignments >> Create
+    app.post('/submitted', async(req, res)=>{
+      const submitAssign = req.body
+
+      const result = await submittedAssignments.insertOne(submitAssign)
+      res.send(result)
+    })
 
 
     // Send a ping to confirm a successful connection
