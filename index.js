@@ -99,6 +99,25 @@ async function run() {
       res.send(result)
     })
 
+    //Submitted Assignments >> read pending
+    app.get('/submitted', async(req, res)=>{
+      const filter = { status: 'pending' }
+      const result = await submittedAssignments.find(filter).toArray()
+      res.send(result)
+    })
+    
+    //Submitted Assignments >> read one
+    app.get('/submitted/:id', async(req, res)=>{
+      const id = req.params.id
+
+      const filter = { _id: new ObjectId(id) }
+      const result = await submittedAssignments.findOne(filter)
+      res.send(result)
+    })
+    
+
+
+
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
