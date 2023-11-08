@@ -106,6 +106,15 @@ async function run() {
       res.send(result)
     })
 
+    //Submitted Assignments >> read by studentId
+    app.get('/mysubmitted/:id', async(req, res)=>{
+      const id = req.params.id
+
+      const filter = { studentId: id }
+      const result = await submittedAssignments.find(filter).toArray()
+      res.send(result)
+    })
+
     //Submitted Assignments >> read one
     app.get('/submitted/:id', async(req, res)=>{
       const id = req.params.id
